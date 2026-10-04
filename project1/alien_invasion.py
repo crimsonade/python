@@ -1,32 +1,33 @@
-import sys
+import pygame, sys
+from  settings import Settings
+from ship import Ship
+from pygame.locals import *
 
-import pygame
-
-class AlienInvasion:
-
-    """A class to manage the overall behavior of the game."""
-
+class AlienInvaion:
     def __init__(self):
-
-        """Initialize the game, and create game resources."""
-
         pygame.init()
+       
+        self.settings= Settings()
 
-        self.screen = pygame.display.set_mode((1200, 800))
+        self.screen= pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
 
+        self.ship= Ship(self)
+        
     def run_game(self):
-        """Start the main loop for the game."""
         while True:
-            # Watch for keyboard and mouse events.
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    pygame.quit()
                     sys.exit()
+
+            self.screen.fill(self.settings.background)
+            self.ship.blit_ship()
 
             pygame.display.flip()
 
+
 if __name__ == '__main__':
-    # Make a game instance, and run the game.
-    ai = AlienInvasion()
-    ai.run_game()                                                                 
+    ai= AlienInvaion()
+    ai.run_game()
+        
